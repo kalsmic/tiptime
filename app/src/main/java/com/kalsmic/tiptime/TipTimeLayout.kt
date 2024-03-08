@@ -52,7 +52,7 @@ fun TipTimeLayout() {
             modifier = Modifier
                 .padding(bottom = 32.dp)
                 .fillMaxWidth(),
-            value = amountInput.toString(),
+            value = amountInput,
             onValueChange = { amountInput = it }
 
 
