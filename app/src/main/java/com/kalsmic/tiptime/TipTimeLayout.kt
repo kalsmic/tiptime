@@ -1,5 +1,6 @@
 package com.kalsmic.tiptime
 
+import android.icu.text.NumberFormat
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,6 +28,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun TipTimeLayout() {
+    var amountInput by remember { mutableStateOf("") }
+    val amount = amountInput.toDoubleOrNull() ?: 0.0
+    val tip = calculateTip(amount)
     Column(
         modifier = Modifier
             .statusBarsPadding()
@@ -36,6 +40,7 @@ fun TipTimeLayout() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+
         Text(
             text = stringResource(id = R.string.calculate_tip),
             modifier = Modifier
@@ -46,13 +51,15 @@ fun TipTimeLayout() {
         EditNumberField(
             modifier = Modifier
                 .padding(bottom = 32.dp)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            value = amountInput.toString(),
+            onValueChange = { amountInput = it }
+
 
         )
         Text(
             text = stringResource(
-                id = R.string.tip_amount,
-                stringResource(R.string.tip_format_args)
+                id = R.string.tip_amount, tip,
             ),
             style = MaterialTheme.typography.displaySmall
         )
@@ -65,15 +72,20 @@ fun TipTimeLayout() {
 
 
 @Composable
-fun EditNumberField(modifier: Modifier){
-    var amountInput by remember { mutableStateOf("")}
+fun EditNumberField(modifier: Modifier, value: String, onValueChange: (String) -> Unit) {
+
 
     TextField(
-        value = amountInput,
-        onValueChange = { amountInput = it },
+        value = value,
+        onValueChange = onValueChange,
         label = { Text(text = stringResource(id = R.string.bill_amount)) },
         singleLine = true,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         modifier = modifier
     )
+}
+
+fun calculateTip(amount: Double, tipPercent: Double = 15.0): String {
+    val tip = tipPercent / 100 * amount
+    return NumberFormat.getCurrencyInstance().format(tip)
 }
