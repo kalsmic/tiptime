@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    TipTimeScreen()
+                    TipTimeLayout()
                 }
             }
         }
@@ -33,6 +33,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TipTimeLayoutPreview() {
     TipTimeTheme {
-        TipTimeScreen()
+        TipTimeLayout()
     }
 }

@@ -38,7 +38,7 @@ import com.kalsmic.tiptime.ui.theme.TipTimeTheme
 import java.text.NumberFormat
 
 @Composable
-fun TipTimeScreen() {
+fun TipTimeLayout() {
     var amountInput by remember { mutableStateOf("") }
     val amount = amountInput.toDoubleOrNull() ?: 0.0
     var percentInput by remember { mutableStateOf("") }
@@ -164,6 +164,6 @@ internal fun calculateTip(amount: Double, tipPercent: Double = 15.0, roundUp: Bo
 @Composable
 fun TipTimeScreenPreview() {
     TipTimeTheme {
-        TipTimeScreen()
+        TipTimeLayout()
     }
 }
